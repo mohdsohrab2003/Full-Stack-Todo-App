@@ -1,0 +1,56 @@
+<%- include("../partials/head.ejs") %>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+  <%- include("../partials/navbar.ejs") %>
+  
+  <div class="max-w-2xl mx-auto mt-10 p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
+    <h1 class="text-3xl font-bold mb-8 text-center text-teal-700 tracking-tight">
+      My Todo List
+    </h1>
+
+    <!-- Task List -->
+    <ul class="space-y-4">
+      <% if (tasks.length === 0) { %>
+        <li class="text-gray-500 text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+          <p class="text-lg">No tasks yet.</p>
+          <p class="text-sm mt-2">Add your first task to get started!</p>
+        </li>
+      <% } %>
+      
+      <% tasks.forEach(task => { %>
+        <li class="group flex justify-between items-center p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-all duration-200 hover:border-teal-200">
+          <span class="text-gray-700 font-medium"><%= task.task %></span>
+          <div class="flex items-center space-x-3">
+            <form action="/delete-task/<%= task._id %>" method="POST" class="inline">
+              <button
+                type="submit"
+                class="px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors duration-200"
+              >
+                Delete
+              </button>
+            </form>
+            <a 
+              href="/update-task/<%= task._id %>?update=true" 
+              class="px-4 py-2 text-sm text-teal-600 hover:bg-teal-50 rounded-md transition-colors duration-200"
+            >
+              Update
+            </a>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+
+    <!-- Add Task Button -->
+    <div class="mt-8 text-center">
+      <a 
+        href="/add-task" 
+        class="inline-flex items-center px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        Add New Task
+      </a>
+    </div>
+  </div>
+</body>
+</html>
